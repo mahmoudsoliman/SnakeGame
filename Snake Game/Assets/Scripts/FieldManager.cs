@@ -11,9 +11,11 @@ public class FieldManager : MonoBehaviour {
 	public int[,] field;
 
 	private static FieldManager instance = null;
+	private List<GameObject> obstacles;
 
 	public void Initialize()
 	{
+		obstacles = new List<GameObject> ();
 		field = new int[Height + 2, Width + 2];
 		for (int i = 0; i <= Height; i++) 
 		{
@@ -37,6 +39,7 @@ public class FieldManager : MonoBehaviour {
 			}
 			GameObject newObstacle = Instantiate (obstaclePrefab) as GameObject;
 			newObstacle.transform.position = new Vector3 (x, 0, z);
+			obstacles.Add (newObstacle);
 			field [z, x] = 2;
 		}
 	}
@@ -153,5 +156,17 @@ public class FieldManager : MonoBehaviour {
 			instance = this;
 
 		return instance;
+	}
+
+	public void Clear()
+	{
+		if (obstacles != null) 
+		{
+			for (int i = 0; i < obstacles.Count; i++) 
+			{
+				if (obstacles [i] != null)
+					Destroy (obstacles [i]);
+			}
+		}
 	}
 }

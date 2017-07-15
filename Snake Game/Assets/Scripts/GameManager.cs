@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 
 	private static GameManager instance = null;
 	public int level;
+	public int difficulty;
 	public GameObject snakePrefab;
 	private GameObject snakeGO;
 	public GameObject fieldManager;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour {
 	{
 		Clear ();
 		fieldManager.GetComponent<FieldManager> ().GetInstance ().Initialize ();
-		fieldManager.GetComponent<FieldManager> ().GetInstance ().SetObstacles (level-1);
+		fieldManager.GetComponent<FieldManager> ().GetInstance ().SetObstacles (difficulty);
 		snakeGO = Instantiate (snakePrefab) as GameObject;
 		snakeGO.GetComponent<Snake> ().Initialize (fieldManager.GetComponent<FieldManager> (), this, fruitManager.GetComponent<FruitManager>());
 		fruitManager.GetComponent<FruitManager> ().GetInstance ().Initialize (fieldManager.GetComponent<FieldManager> ());
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour {
 		if(snakeGO != null)
 			Destroy (snakeGO);
 		fruitManager.GetComponent<FruitManager> ().GetInstance ().Clear ();
+		fieldManager.GetComponent<FieldManager> ().GetInstance ().Clear ();
 	}
 
 	public void Lose()
